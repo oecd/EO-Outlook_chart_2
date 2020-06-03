@@ -183,7 +183,7 @@
             .attr("y", function (d) { height })
             .attr("class", "explanatory")
             .text("This is the quartely evolution of the World GDP in 2019")
-            .transition().delay(2800).remove()
+            .transition().delay(2700).remove()
 
 
         // Draw forecast
@@ -225,16 +225,16 @@
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().duration(500)
-                .text("and how - back in November 2019 - we estimated it to grow ")
-                .transition().delay(3100).duration(200).remove()
+                .text("and how - back in November 2019 - we estimated it would grow")
+                .transition().delay(3000).duration(200).remove()
 
             scenarioSVG.append("text")
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(4000).duration(500)
-                .text("With the Covid-19 crisis, we had to drastically revise our forecasts")
-                .transition().delay(3100).duration(200).remove()
+                .text("The Covid-19 crisis led us to drastically revise our forecasts")
+                .transition().delay(3000).duration(200).remove()
         }
 
         function drawScenario1(){
@@ -274,8 +274,8 @@
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().duration(500)
-                .text("the blue line shows our forecasts with one Covid-crisis")
-                .transition().delay(6100).duration(200).remove()
+                .text("the blue line shows our forecasts with one Covid-19 crisis")
+                .transition().delay(6000).duration(200).remove()
 
         } 
 
@@ -319,7 +319,7 @@
                 .attr("class", "explanatory")
                 .transition().duration(500)
                 .text("the purple line shows forecasts with a Covid-19 rebound in the fall")
-                .transition().delay(7100).duration(200).remove()
+                .transition().delay(7000).duration(200).remove()
 
             }
         
