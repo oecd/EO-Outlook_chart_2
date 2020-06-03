@@ -19,6 +19,7 @@
         <script src="libs/d3-scale-chromatic.v1.min.js"></script>
         <script src="libs/topojson.v1.min.js"></script>
         <script src="libs/d3-queue.v3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
          <link rel="icon" href="img/favicon.ico">
  
     </head>
@@ -32,6 +33,7 @@
 
         var startChart = "2018-Q1";
         var startForecast = "2019-Q4";
+        var annotationMark=[];
 
 
     var allScenario;
@@ -97,6 +99,8 @@
 
     function render(err, scenarioData) {
         allScenario = scenarioData;
+        annotationMark= scenarioData.filter(function (d) { return d.TIME == "2021-Q1"; });
+         console.log(annotationMark)
 
         updateChart();
 
@@ -151,6 +155,7 @@
                 i = d3.interpolateString("0," + l, l + "," + l);
             return function (t) { return i(t); };
         }
+
         // Draw the line
         scenarioSVG
             .append("path")
@@ -168,20 +173,27 @@
                     (allScenario.filter(function (d) { return dateParser(d.TIME) <= dateParser(startForecast); }))
             })
             .transition()
-            .duration(1000)
+            .duration(3000)
             .attrTween("stroke-dasharray", tweenDash)
+            .on("end", drawforecast)
 
-                        
+        
+        scenarioSVG.append("text")
+            .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+            .attr("y", function (d) { height })
+            .attr("class", "explanatory")
+            .text("This is the quartely evolution of the World GDP in 2019")
+            .transition().delay(2800).remove()
+
+
+        // Draw forecast
+        function drawforecast(){             
         scenarioSVG
             .append("path")
-            .attr("fill", "none"/*"#8DCD79"*/)
+            .attr("fill", "none")
             .attr("stroke", function (d) { return color[0] })
             .attr("stroke-width", "4px")
-            // .attr("opacity", function () { if (k == 0) return 0.1; else return 1; })
-            .attr("class", "forecast")
-            //.attr("id", function (d) { return "doubleHit" + i; })
-            .transition().delay(3000)
-            .duration(10000)
+            .attr("opacity",0.5)
             .attr("d", function (d) {
                 return d3.line()//area
                     .x(function (d) { return x(dateParser(d.TIME)); })
@@ -189,99 +201,195 @@
                     .y(function (d) { return y(parseFloat(d.forecast2019)); })
                     (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
             })
-            .attrTween("stroke-dasharray", tweenDash)
-        
-        scenarioSVG
-            .append("path")
-            .attr("fill", "none"/*"#8DCD79"*/)
-            .attr("stroke", function (d) { return color[1] })
-            .attr("stroke-width", "4px")
-            // .attr("opacity", function () { if (k == 0) return 0.1; else return 1; })
-            .attr("class", "forecast")
-            .transition().delay( 10000)
-            .ease(d3.easeCircle).duration(1750)
-            .attr("d", function (d) {
-                return d3.line()//area
-                    .x(function (d) { return x(dateParser(d.TIME)); })
-                    // .y0(y(0))
-                    .y(function (d) { return y(parseFloat(d.singleHit)); })
-                     (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
-            })
             .transition()
-            .duration(5000)
+            .duration(8000)
             .attrTween("stroke-dasharray", tweenDash)
-         
 
-        scenarioSVG
-            .append("path")
-            .attr("fill", "none"/*"#8DCD79"*/)
-            .attr("stroke", function (d) { return color[2] })
-            .attr("stroke-width", "4px")
-            // .attr("opacity", function () { if (k == 0) return 0.1; else return 1; })
-            .attr("class", "forecast")
-            .transition().delay(15000)
-            .ease(d3.easeCircle).duration(1750)
-            .attr("d", function (d) {
-                return d3.line()//area
-                    .x(function (d) { return x(dateParser(d.TIME)); })
-                    // .y0(y(0))
-                    .y(function (d) { return y(parseFloat(d.doubleHit)); })
-                  (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
-            })
-            .transition()
-            .duration(5000)
-            .attrTween("stroke-dasharray", tweenDash)
-        
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width/5 })
-            .attr("y", function (d) { 7*height/8})
-            .attr("class","explanatory")
-            .text("This is the World GDP in 2019")
-            .transition().delay(2800).remove()
-
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width / 5 })
-            .attr("y", function (d) { 7 * height / 8 })
-            .attr("class", "explanatory")
-            .transition().delay(3500).duration(500)
-            .text("and how we estimated it to grow back in November 2019")
-            .transition().delay(2800).remove()
-
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width / 5 })
-            .attr("y", function (d) { 7 * height / 8 })
-            .attr("class", "explanatory")
-            .transition().delay(7000).duration(500)
-            .text("Then Covid 19-hit and forecasts changed")
-            .transition().delay(2300).remove()
+            scenarioSVG
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke-width", "4px")
+                .attr("class","forecast")
+                .transition().delay(7500)
+                .attr("d", function (d) {
+                    return d3.line()//area
+                        .x(function (d) { return x(dateParser(d.TIME)); })
+                        // .y0(y(0))
+                        .y(function (d) { return y(parseFloat(d.forecast2019)); })
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                })
+                .on("end", drawScenario1)
             
-        
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width / 5 })
-            .attr("y", function (d) { 7 * height / 8 })
-            .attr("class", "explanatory")
-            .transition().delay(10000).duration(500)
-            .text("if it hits once the line shows our anticipation of GDP evolution")
-            .transition().delay(4300).remove()
+            scenarioSVG.append("text")
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("y", function (d) { height })
+                .attr("class", "explanatory")
+                .transition().duration(500)
+                .text("and how - back in November 2019 - we estimated it to grow ")
+                .transition().delay(3100).duration(200).remove()
 
+            scenarioSVG.append("text")
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("y", function (d) { height })
+                .attr("class", "explanatory")
+                .transition().delay(4000).duration(500)
+                .text("With the Covid-19 crisis, we had to drastically revise our forecasts")
+                .transition().delay(3100).duration(200).remove()
+        }
 
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width / 5 })
-            .attr("y", function (d) { 7 * height / 8 })
-            .attr("class", "explanatory")
-            .transition().delay(15000).duration(500)
-            .text("and if it hits twice")
-            .transition().delay(3300).remove()
+        function drawScenario1(){
+            scenarioSVG
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke", function (d) { return color[1] })
+                .attr("stroke-width", "4px")
+                .attr("d", function (d) {
+                    return d3.line()//area
+                        .x(function (d) { return x(dateParser(d.TIME)); })
+                        // .y0(y(0))
+                        .y(function (d) { return y(parseFloat(d.singleHit)); })
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                })
+                .transition()
+                .duration(7000)
+                .attrTween("stroke-dasharray", tweenDash)
+
+            scenarioSVG
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke-width", "4px")
+                .attr("class", "forecast")
+                .transition().delay(6500)
+                .attr("d", function (d) {
+                    return d3.line()//area
+                        .x(function (d) { return x(dateParser(d.TIME)); })
+                        // .y0(y(0))
+                        .y(function (d) { return y(parseFloat(d.singleHit)); })
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                })
+                .on("end", drawScenario2)
             
+            scenarioSVG.append("text")
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("y", function (d) { height })
+                .attr("class", "explanatory")
+                .transition().duration(500)
+                .text("the blue line shows our forecasts with one Covid-crisis")
+                .transition().delay(6100).duration(200).remove()
 
-        scenarioSVG.append("text")
-            .attr("x", function (d) { return width / 5 })
-            .attr("y", function (d) { 7 * height / 8 })
-            .attr("class", "explanatory")
-            .transition().delay(19000).duration(500)
-            .text("whatever happens we'll take at least 2 years to get back to 2019-Q4 level")
-            //.transition().delay(10000).remove()
+        } 
 
+
+        function drawScenario2(){
+
+            scenarioSVG
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke", function (d) { return color[2] })
+                .attr("stroke-width", "4px")
+                .attr("d", function (d) {
+                    return d3.line()//area
+                        .x(function (d) { return x(dateParser(d.TIME)); })
+                        // .y0(y(0))
+                        .y(function (d) { return y(parseFloat(d.doubleHit)); })
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                })
+                .transition()
+                .duration(8000)
+                .attrTween("stroke-dasharray", tweenDash)
+
+            scenarioSVG
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke-width", "4px")
+                .attr("class", "forecast")
+                .transition().delay(7500)
+                .attr("d", function (d) {
+                    return d3.line()//area
+                        .x(function (d) { return x(dateParser(d.TIME)); })
+                        // .y0(y(0))
+                        .y(function (d) { return y(parseFloat(d.doubleHit)); })
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                })
+                .on("end", annotate)
+            
+            scenarioSVG.append("text")
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("y", function (d) { height })
+                .attr("class", "explanatory")
+                .transition().duration(500)
+                .text("the purple line shows forecasts it there is a Covid-19 rebound in the fall")
+                .transition().delay(7100).duration(200).remove()
+
+            }
+        
+
+        function annotate(){
+          // Features of the annotation
+            const annotation2019 = [
+                {
+                    note: {
+                        label: "November 2019 forecasts"
+                    },
+                    x: x(dateParser("2021-Q1")),
+                    y: y(annotationMark[0].forecast2019),
+                    dy: 50,
+                    dx: 50
+                }
+            ]
+            const annotationSingle = [
+                {
+                    note: {
+                        label: "Single-hit scenario"
+                        
+                    },
+                    x: x(dateParser("2021-Q1")),
+                    y: y(annotationMark[0].singleHit),
+                    dy: -50,
+                    dx: -50
+                }
+            ]
+            const annotationDouble = [
+                {
+                    note: {
+                        label: "Double-hit scenario"
+                    },
+                    x: x(dateParser("2021-Q1")),
+                    y: y(annotationMark[0].doubleHit),
+                    dy: 50,
+                    dx: 50
+                }
+            ]
+            // Add annotation to the chart
+            const makeAnnotation2019 = d3.annotation()
+                .annotations(annotation2019)
+            scenarioSVG
+                .append("g")
+                .call(makeAnnotation2019)
+
+            // Add annotation to the chart
+            const makeAnnotationSingle = d3.annotation()
+                .annotations(annotationSingle)
+            scenarioSVG
+                .append("g")
+                .call(makeAnnotationSingle)
+
+            // Add annotation to the chart
+            const makeAnnotationDouble = d3.annotation()
+                .annotations(annotationDouble)
+            scenarioSVG
+                .append("g")
+                .call(makeAnnotationDouble)
+
+
+            scenarioSVG.append("text")
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("y", function (d) { height })
+                .attr("class", "explanatory")
+                .transition().duration(500)
+                .text("In both scenarios, we won't be back at 2019-Q4 level before at least 2 years")
+
+        }
     }
  </script>
 
