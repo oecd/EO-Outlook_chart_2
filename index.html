@@ -43,7 +43,7 @@
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    var color = ["#E73741", "#0F8FD9", "#993484", "#DF521E", "#719E24"];
+    var color = ["#0F8FD9", "#993484","#E73741",  "#DF521E", "#719E24"];
 
     var margin = { top: 70, right: 50, bottom: 30, left: 80 };
 
@@ -224,9 +224,9 @@
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
-                .transition().duration(500)
+                .transition().delay(500).duration(500)
                 .text("and how - back in November 2019 - we estimated it would grow")
-                .transition().delay(3000).duration(200).remove()
+                .transition().delay(2500).duration(200).remove()
 
             scenarioSVG.append("text")
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
@@ -273,9 +273,9 @@
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
-                .transition().duration(500)
-                .text("the blue line shows our forecasts with one Covid-19 crisis")
-                .transition().delay(6000).duration(200).remove()
+                .transition().delay(500).duration(500)
+                .text("the purple line shows our forecasts with one Covid-19 crisis")
+                .transition().delay(5500).duration(200).remove()
 
         } 
 
@@ -317,9 +317,9 @@
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
-                .transition().duration(500)
-                .text("the purple line shows forecasts with a Covid-19 rebound in the fall")
-                .transition().delay(7000).duration(200).remove()
+                .transition().delay(500).duration(500)
+                .text("the red line shows forecasts with a Covid-19 rebound in the fall")
+                .transition().delay(6500).duration(200).remove()
 
             }
         
@@ -386,8 +386,8 @@
                 .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
-                .transition().duration(500)
-                .text("In both scenarios, we won't be back at 2019-Q4 level before at least 2 years")
+                .transition().delay(500).duration(500)
+                .text("In both scenarios, we won't be back at 2019-Q4 level for at least 2 years")
 
         }
     }
