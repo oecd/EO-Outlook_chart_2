@@ -41,9 +41,8 @@
 
     var divMap = d3.select("body").append("div")
         .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    var color = ["#0F8FD9", "#E1B400","#993484",  "#DF521E", "#719E24"];
+        .style("opacity", 0); 
+    var color = ["#32A674", "#0B68AF", "#E73741", "#E1B400","#993484",  "#DF521E", "#719E24"];
 
     var margin = { top: 70, right: 50, bottom: 30, left: 80 };
 
@@ -274,7 +273,7 @@
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
-                .text("the yellow line shows our forecasts with only one Covid-19 episod")
+                .text("the blue line shows our forecasts with only one Covid-19 episod")
                 .transition().delay(5500).duration(200).remove()
 
         } 
@@ -318,7 +317,7 @@
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
-                .text("the purple line shows forecasts with a second wave in the fall")
+                .text("the red line shows forecasts with a second wave in the fall")
                 .transition().delay(6500).duration(200).remove()
 
             }
