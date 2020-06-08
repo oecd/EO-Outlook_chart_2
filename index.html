@@ -19,7 +19,7 @@
         <script src="libs/d3-scale-chromatic.v1.min.js"></script>
         <script src="libs/topojson.v1.min.js"></script>
         <script src="libs/d3-queue.v3.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
+        <script src="libs/d3-annotation.js"></script>
          <link rel="icon" href="img/favicon.ico">
  
     </head>
@@ -27,8 +27,25 @@
     <body>
     <h1>A collapse in output followed by a slow recovery</h1>
     <h2>World GDP, index 2019-Q4=100</h2>
+    <img id="Play" src="img/triangle-right.svg" alt="Play button">
+    <img id="Share" src="img/share.svg" alt="share">
     <div id="scenario" alt=""></div>
-
+    <div id="source" class="source">Source: <a class="source" href="https://doi.org/10.1787/eo-data-en" target="_blank">OECD (2020), "OECD
+            Economic Outlook No. 107 (Edition 2020/1)", OECD Economic Outlook: Statistics and Projections (database)</a>. © OECD <a class="source" href="http://www.oecd.org/termsandconditions" target="_blank">Terms & Conditions</a>
+    </div>
+    <div id="shareLink">
+        <div id="shutterholdertracker">
+            <img id="shuttershare" src="img/cross.svg">
+            <div id="trackersText">
+                <b>Copy link:</b><Br />
+                <span>https://gitvfd.github.io/EO-Outlook_chart_2/</span><Br />
+                <b>Embed link:</b><Br />
+                <textarea
+                    readonly><iframe src="https://gitvfd.github.io/EO-Outlook_chart_2/" width="100%" height="500px" style="border:none;"></iframe></textarea>
+    
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
 
         var startChart = "2018-Q1";
@@ -52,9 +69,9 @@
 
     var height;
     if (width > 650)
-        height = width * mapRatio;
+        height=350//height = width * mapRatio;
     else
-        height = width;
+        height = 350//height = width;
 
 
     var urls = {
@@ -99,7 +116,6 @@
     function render(err, scenarioData) {
         allScenario = scenarioData;
         annotationMark= scenarioData.filter(function (d) { return d.TIME == "2021-Q1"; });
-         console.log(annotationMark)
 
         updateChart();
 
@@ -107,6 +123,7 @@
     }
 
     function updateChart() {
+        document.getElementById("Play").style.display = "none";
         scenarioSVG.selectAll("*").remove()
 
         x.domain(d3.extent(allScenario, function (d) { return dateParser(d.TIME); }))
@@ -172,7 +189,7 @@
                     (allScenario.filter(function (d) { return dateParser(d.TIME) <= dateParser(startForecast); }))
             })
             .transition()
-            .duration(3000)
+            .duration(5000)
             .attrTween("stroke-dasharray", tweenDash)
             .on("end", drawforecast)
 
@@ -182,7 +199,7 @@
             .attr("y", function (d) { height })
             .attr("class", "explanatory")
             .text("This is the quartely evolution of the World GDP in 2019")
-            .transition().delay(2700).remove()
+            .transition().delay(4700).remove()
 
 
         // Draw forecast
@@ -387,9 +404,27 @@
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
                 .text("In both scenarios, we won't be back at 2019-Q4 level for at least 2 years")
+            
+            document.getElementById("Play").style.display = "inline-block";
 
         }
     }
+
+    d3.select("#Play").on("click", updateChart)
+
+    d3.select("#Share").on("click", function () {
+        document.getElementById("shareLink").style.display = "inline-block";
+    })
+    d3.select("#shuttershare")
+        .on("mouseover", function () {
+            d3.select(this).style("opacity", 0.5);
+        })
+        .on("mouseout", function () {
+            d3.select(this).style("opacity", 1);
+        })
+        .on("click", function () {
+            document.getElementById("shareLink").style.display = 'none';
+        })
  </script>
 
 </body>

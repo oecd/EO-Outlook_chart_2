@@ -77,8 +77,22 @@ h2{
 
 }
 
+
 h3 {
     -webkit-margin-after: 0.2em;
+}
+#Play{
+  display: none;
+  margin-left:40px;
+  width:30px;
+  cursor: pointer;
+}
+
+#Play:hover{
+  opacity:50%;
+}
+#Play:active{
+     opacity: 25%;
 }
 
 #introPara{
@@ -144,101 +158,25 @@ div.tooltip {
 
     z-index:2;
 }
-/**
-div.tooltip::after {
-  content: " ";
-  position: absolute;
-  top: 100%;  
-  left: 50%;
-  margin-left: -10px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: #fff transparent transparent transparent;
-}**/
 
 
-
-#world {
-  /**stroke: #deeaf1;**/
-  stroke-width: 0px;
- fill: #c0c7c9;
- stroke:#c0c7c9;
-  opacity: 1;
-}
-
-
-
-#state-borders {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 0.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-.caption{
-  font : 12px Arial; color:#575757;
-}
-.background {
-  fill: #deeaf1;
-  pointer-events: all;
-}
-
-
-#countryCard{
-      position:absolute;
-      top:1%;
-      left: 0; 
-     right: 0; 
-      margin-left: auto; 
-      margin-right: auto;
-      width:95%;
-      height:97%;
-     /** max-width: 1140px;
-      max-height:1000px;**/
-      overflow: scroll;
-      /*padding:2rem;*/
-      background: #FFFFFF;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border-radius: 2px;
-      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-      /*pointer-events: none;*/
-      display:none;    
-
-    z-index:3;
-}
-
-#themebar{
-
-    clear: both;
-}
-
-#navbar{
-
-    clear: both;
-  padding:2rem;
-  margin-left: 2em;
-  font-family: 'Noto Sans', sans-serif;
-  font-weight: 700;
-  font-size: 2rem;
-  color: #0b1e2d;
-
-}
-
-.couNav{
-  font-family: 'Noto Sans', sans-serif;
-  font-weight: 100;
-  font-size: 1.25rem;
-  color: #04629a;
-  text-decoration: underline;
+#Share{
+  float:right;
+  width:25px;
   cursor: pointer;
+  margin-right:10px;
 }
 
-#trackersLink{
+#Share:hover{
+  opacity:50%;
+}
+#Share:active{
+     opacity: 25%;
+}
+
+
+
+#shareLink{
   position:absolute;
   display: none; /* Hidden by default */
   width: 100%; /* Full width (cover the whole page) */
@@ -248,7 +186,7 @@ div.tooltip::after {
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.33); /* Black background with opacity */
-  z-index:5; /* Specify a stack order in case you're using a different order for other elements */
+  z-index:10000; /* Specify a stack order in case you're using a different order for other elements */
   /*cursor: pointer;*/ /* Add a pointer on hover */
   padding:10%;
       display:none;    
@@ -264,12 +202,56 @@ div.tooltip::after {
   z-index:5;
 
 }
-#shutter,#shuttertracker{
+#shuttershare{
   float:right;  
   width:20px;
   margin-bottom: 10px;
   cursor: pointer;
 }
+
+
+.toTrackers{
+    display: inline-block;
+    padding: 18px 25px 15px 25px;
+    font-family: "Noto Sans Display",sans-serif;
+    font-size: 13px;
+    /*font-size: 0.75rem;*/
+    font-weight: 700;
+    line-height: 1em;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    color: #ffffff/**#0b1e2d**/;
+    background: none;/* #633582;*/
+    border: 1px solid #ffffff/**#0b1e2d**/;
+    border-radius: 25px;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+}
+
+
+.toTrackers:hover{
+text-decoration: underline;
+    background: #ffffff;
+    color:#0b1e2d;
+}
+
+
+#trackersText{
+    margin-top:0.75em;
+    margin-left: 2em;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: #0b1e2d;
+}
+
+textarea{min-width:350px;}
 
 
 .flex-container {position: relative;
@@ -693,19 +675,19 @@ width:175px;
 
 
 
-#source{
-    display: inline-block;
-  margin-left:5%;
-  margin-right:5px;
-  font-family: 'Noto Sans', sans-serif;
-  font-weight: 300;
-  font-size: 1.25rem;
-  /*text-decoration: underline;
-  
-  color: #04629a;*/
-  color: #ffffff;
-
+#source{ 
+  margin-left: 2%;
 }
+
+.source{
+
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  fill: #7A7A7A;
+}
+
+
 .toData{
     display: inline-block;
     padding: 7px 10px 7px 10px;
@@ -858,7 +840,7 @@ text-decoration: underline;
 
 .forecast{
   stroke:#dce2e7;
-  stroke-dasharray: 3,3;
+  stroke-dasharray: 5,5;
 }
 #updateTag{
   margin-left:5%;
