@@ -1096,6 +1096,16 @@ div.tooltip {
       fill: rgb(97, 97, 97);
 }
 
+
+@media only screen and (max-width: 850px) {
+
+.explanatory{
+      font-size: 2rem;
+
+}
+}
+
+
 @media only screen and (max-width: 650px) {
 #selIndicator{
     margin-left: 1.2em;
