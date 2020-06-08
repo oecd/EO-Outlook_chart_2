@@ -63,14 +63,22 @@
     var margin = { top: 70, right: 50, bottom: 30, left: 40 };
 
     var mapRatio = 8 / 20;
+    var width,lagText,height;
 
-    var width = document.getElementById("scenario").offsetWidth - margin.left - margin.right;
-
-    var height;
-    if (width > 650)
-        height=290//height = width * mapRatio;
+    if(document.getElementById("scenario").offsetWidth - margin.left - margin.right > 1140-margin.right - margin.left)
+        width = 1140 - margin.right - margin.left;
     else
-        height = 290//height = width;
+        width = document.getElementById("scenario").offsetWidth - margin.left - margin.right;
+
+    if (width > 650){
+            height = 290;//height = width * mapRatio;
+            lagText = 40;
+
+    }
+    else{
+        height = 290;//height = width;
+        lagText = 10;
+    }
 
 
     var urls = {
@@ -194,7 +202,7 @@
 
         
         scenarioSVG.append("text")
-            .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+            .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
             .attr("y", function (d) { height })
             .attr("class", "explanatory")
             .text("This is the quartely evolution of the World GDP in 2019")
@@ -236,7 +244,7 @@
                 .on("end", drawScenario1)
             
             scenarioSVG.append("text")
-                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
@@ -244,7 +252,7 @@
                 .transition().delay(2500).duration(200).remove()
 
             scenarioSVG.append("text")
-                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(4000).duration(500)
@@ -285,7 +293,7 @@
                 .on("end", drawScenario2)
             
             scenarioSVG.append("text")
-                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
@@ -329,7 +337,7 @@
                 .on("end", annotate)
             
             scenarioSVG.append("text")
-                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
@@ -398,7 +406,7 @@
 
 
             scenarioSVG.append("text")
-                .attr("x", function (d) { return x(dateParser("2019-Q1")) +30 })
+                .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
