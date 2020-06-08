@@ -49,6 +49,7 @@
 
         var startChart = "2018-Q1";
         var startForecast = "2019-Q4";
+        var dashedStartForecast = "2020-Q1";
         var annotationMark=[];
 
 
@@ -156,13 +157,13 @@
 
                     // return appropriate quarter for that month
                     if (mon <= 2) {
-                        return "Q1 -" + yr;
+                        return yr + "-Q1";
                     } else if (mon <= 5) {
-                        return "Q2 - " + yr;
+                        return yr + "-Q2";
                     } else if (mon <= 8) {
-                        return "Q3 - " + yr;
+                        return yr + "-Q3";
                     } else {
-                        return "Q4 - " + yr;
+                        return yr + "-Q4";
                     }
                 }));
 
@@ -205,7 +206,7 @@
             .attr("x", function (d) { return x(dateParser("2019-Q1")) +lagText })
             .attr("y", function (d) { height })
             .attr("class", "explanatory")
-            .text("This is the quartely evolution of the World GDP in 2019")
+            .text("This is the quarterly evolution of global GDP in 2019")
             .transition().delay(4700).remove()
 
 
@@ -288,7 +289,7 @@
                         .x(function (d) { return x(dateParser(d.TIME)); })
                         // .y0(y(0))
                         .y(function (d) { return y(parseFloat(d.singleHit)); })
-                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(dashedStartForecast); }))
                 })
                 .on("end", drawScenario2)
             
@@ -332,7 +333,7 @@
                         .x(function (d) { return x(dateParser(d.TIME)); })
                         // .y0(y(0))
                         .y(function (d) { return y(parseFloat(d.doubleHit)); })
-                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(startForecast); }))
+                        (allScenario.filter(function (d) { return dateParser(d.TIME) >= dateParser(dashedStartForecast); }))
                 })
                 .on("end", annotate)
             
@@ -341,7 +342,7 @@
                 .attr("y", function (d) { height })
                 .attr("class", "explanatory")
                 .transition().delay(500).duration(500)
-                .text("the red line shows forecasts with a second wave in the fall")
+                .text("the red line shows GDP if a second major wave of infections hits before year-end")
                 .transition().delay(6500).duration(200).remove()
 
             }
