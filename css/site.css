@@ -1097,13 +1097,22 @@ div.tooltip {
 }
 
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 975px) {
 
 .explanatory{
       font-size: 2rem;
 
 }
 }
+
+@media only screen and (max-width: 850px) {
+
+.explanatory{
+      font-size: 1.5rem;
+
+}
+}
+
 
 
 @media only screen and (max-width: 650px) {
